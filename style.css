@@ -1,21 +1,39 @@
+/* Algemene stijlen */
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 
+/* Grid items */
+.item1 { grid-area: header; }
+
+.item2 { grid-area: main; }
+
+.item3 { grid-area: menu; }
+
+/* Grid container smallest screens */
 .grid-container {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 10px;
-    padding: 20px; 
-    border: 2px solid #333; 
-    justify-content: center; 
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    'header'
+    'menu'
+    'main';
+  gap: 10px;
+  background-color: #2196F3;
+  padding: 10px;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 5px;
 }
 
 .card {
-  width: 100%;
-  height: 100%; 
+  width: auto;
+  height: 150px; 
   background-color: #f0f0f0;
   border: 2px solid #ccc;
   display: flex;
@@ -23,14 +41,111 @@
   align-items: center;
   font-size: 24px;
   cursor: pointer;
+  color: white;
 }
 
-.header {
-  grid-row: 1;
-  grid-column: 1 / -1;
+/* Grid container op tablet-formaat */
+@media (min-width: 576px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'header'
+      'menu'
+      'main';
+  }
+
+  .main {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5px;
+  }
+
+  .card {
+    width: auto;
+    height: 150px; 
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+  }
+}
+
+/* Grid container op desktop-formaat */
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-areas:
+      'header menu'
+      'main main';
+  }
+
+  .main {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 5px;
+  }
+
+  .card {
+    width: auto;
+    height: 150px; 
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+  }
+}
+
+/* Grid container op grote schermen */
+@media (min-width: 992px) {
+  .grid-container {
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-areas:
+      'header header header header header header'
+      'main main main main menu menu';
+  }
+
+  .main {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+  }
+
+  .card {
+    width: auto;
+    height: 150px; 
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+  }
+
+  .item3 ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+/* Grid item styles */
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
   text-align: center;
+  padding: 20px 0;
 }
 
+/* Progress bar styles */
 .progress-bar {
   width: 15%;
   background-color: #cccccc;
@@ -46,3 +161,34 @@
   margin: 0 auto;
   background-color: #00b300;
 }
+
+#closed {
+  background-color: lightgreen;
+}
+
+#open {
+  background-color: darkgreen;
+}
+
+#found {
+  background-color: purple;
+}
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.settings-container > div {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.settings-container select,
+.settings-container input[type="color"] {
+  margin-left: 10px;
+}
+
+
