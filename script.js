@@ -1,3 +1,7 @@
+let timeInterval;
+let gameStarted = false;
+let foundPairs = 0;
+
 function cards() {
     const container = document.querySelector('.item2.main');
     const letters = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
@@ -18,6 +22,13 @@ function cards() {
 
 
     const show = function() {
+
+        if (!gameStarted) {
+            gameStarted = true;
+            timeInterval = setInterval(timer, 1000);
+        }
+
+
         if(this.id === 'closed') {
             const index = this.getAttribute('index');
             this.textContent = cardPairs[index];
@@ -36,6 +47,12 @@ function cards() {
                     second.id = 'found';
                     first.removeEventListener('click', show);
                     second.removeEventListener('click', show);
+                    foundPairs++;
+                    if(foundPairs === 18) {
+                        clearInterval(timeInterval);
+                        alert('Goed gedaan, je hebt alle paren gevonden! Je hebt er ' + document.querySelector('#elapsedTime').innerHTML + 'seconden over gedaan');
+                    }
+
                 } else {
                     setTimeout(() => {
                         if (this.id === 'open') {
@@ -64,8 +81,21 @@ function cards() {
         card.addEventListener('click', show);
         container.appendChild(card);
     }
+
+    const newGameButton = document.querySelector('#newGame');
+    newGameButton.addEventListener('click', function() {
+        clearInterval(timeInterval);
+        window.location.reload();
+    });
+}
+
+function timer() {
+    let timerValue = parseInt(document.querySelector('#elapsedTime').innerHTML) || 0;
+    timerValue++;
+    document.querySelector('#elapsedTime').innerHTML = timerValue;
 }
 
 document.addEventListener('DOMContentLoaded', function() {
     cards();
+    timer();
 });
