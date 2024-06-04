@@ -4,6 +4,7 @@ import { cardPairs} from "./modules/card.js";
 import { timer, stopTimer } from "./modules/timer.js";
 
 document.addEventListener('DOMContentLoaded', function() {
+
     cardPairs();
 
     const newGameButton = document.querySelector('#newGame');
