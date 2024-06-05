@@ -5,6 +5,22 @@ import { timer, stopTimer } from "./modules/timer.js";
 
 document.addEventListener('DOMContentLoaded', function() {
 
+     const jwtToken = localStorage.getItem('jwt');
+     if (jwtToken) {
+
+         const ttl = 3600;
+
+         tokenExpiry(() => {
+             localStorage.removeItem('jwt');
+             alert('Sessie verlopen, je moet opnieuw inloggen');
+
+             window.location.href = "/auth/login.html";
+         }, ttl * 1000);
+     } else {
+         alert('Je moet ingelogd zijn hiervoor');
+         window.location.href = "/auth/login.html";
+     }
+
     cardPairs();
 
     const newGameButton = document.querySelector('#newGame');
