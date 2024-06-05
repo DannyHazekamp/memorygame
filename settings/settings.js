@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     const jwtToken = localStorage.getItem('jwt');
+    
     if (jwtToken) {
 
         const ttl = 3600;
@@ -16,19 +17,34 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
         alert('Je moet ingelogd zijn hiervoor');
         window.location.href = "../auth/login.html";
-    }    
+        return;
+    } 
+
+
+    function parseJwt (token) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    
+        return JSON.parse(jsonPayload);
+    }
+
+    const decodedToken = parseJwt(jwtToken);
+    const userId = decodedToken.sub;   
 
     document.getElementById('preferencesForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
         const formData = {
-            preferredApi: document.getElementById('preferredApi').value,
-            colorClosed: document.getElementById('colorClosed').value,
-            colorFound: document.getElementById('colorFound').value,
+            api: document.getElementById('api').value,
+            color_closed: document.getElementById('color_closed').value,
+            color_found: document.getElementById('color_found').value,
             email: document.getElementById('email').value
         };
 
-        fetch('http://localhost:8000/api/player/preferences', {
+        fetch(`http://localhost:8000/api/player/${userId}/preferences`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -37,18 +53,20 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify(formData)
         })
         .then(response => {
-            if (response.ok) {
-                return response.json();
+            if (response.status === 204) {
+                return;
+            } else if (response.ok) {
+                return response.json;
             } else {
-                throw new Error('Failed to update preferences');
+                throw new Error('Fout bij het updaten van voorkeuren');
             }
         })
         .then(data => {
-            console.log('Preferences updated successfully:', data);
+            console.log('Voorkeuren succesvol bijgewerkt:', data);
             alert('Voorkeuren zijn succesvol bijgewerkt!');
         })
         .catch(error => {
-            console.error('Error updating preferences:', error);
+            console.error('Fout bij het updaten van voorkeuren:', error);
             alert('Er is een fout opgetreden bij het bijwerken van de voorkeuren.');
         });
     });
