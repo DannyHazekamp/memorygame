@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
          const ttl = 3600;
 
-         tokenExpiry(() => {
+         setTimeout(() => {
              localStorage.removeItem('jwt');
              alert('Sessie verlopen, je moet opnieuw inloggen');
 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voorkeuren wijzigen</title>
+    <link rel="stylesheet" href="settings.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Voorkeuren wijzigen</h1>
+        <form id="preferencesForm">
+            <label for="preferredApi">Kies je favoriete plaatjes-API:</label>
+            <select id="preferredApi" name="preferredApi">
+                <option value="dogs">Honden</option>
+                <option value="randomPics">Plaatjes</option>
+            </select><br>
+
+            <label for="colorClosed">Kleur van gesloten kaarten:</label>
+            <input type="color" id="colorClosed" name="colorClosed"><br>
+
+            <label for="colorFound">Kleur van gevonden kaarten:</label>
+            <input type="color" id="colorFound" name="colorFound"><br>
+
+            <label for="email">Wijzig je e-mailadres:</label>
+            <input type="email" id="email" name="email"><br>
+
+            <button type="submit">Opslaan</button>
+        </form>
+    </div>
+
+    <script src="settings.js"></script>
+</body>
+</html>
