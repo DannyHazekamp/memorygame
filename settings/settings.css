@@ -36,7 +36,7 @@ input[type="email"] {
     box-sizing: border-box;
 }
 
-button[type="submit"] {
+button {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -46,6 +46,7 @@ button[type="submit"] {
     font-size: 16px;
 }
 
-button[type="submit"]:hover {
+
+button:hover {
     background-color: #0056b3;
 }

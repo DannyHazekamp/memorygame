@@ -20,19 +20,12 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     } 
 
+    const backButton = document.getElementById('backButton');
+    backButton.addEventListener('click', function() {
+        window.location.href = "../memory.html";
+    });
 
-    function parseJwt (token) {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        var jsonPayload = decodeURIComponent(window.atob(base64).split('').map(function(c) {
-            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-        }).join(''));
-    
-        return JSON.parse(jsonPayload);
-    }
-
-    const decodedToken = parseJwt(jwtToken);
-    const userId = decodedToken.sub;   
+    const userId = localStorage.getItem('userId');
 
     document.getElementById('preferencesForm').addEventListener('submit', function(event) {
         event.preventDefault();
@@ -61,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .then(data => {
+            localStorage.setItem('formData', JSON.stringify(formData));
             console.log('Voorkeuren succesvol bijgewerkt:', data);
             alert('Voorkeuren zijn succesvol bijgewerkt!');
         })

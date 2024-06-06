@@ -7,7 +7,7 @@ let timeInterval;
 let gameStarted = false;
 let foundPairs = 0;
 let cardSet = [];
-
+let score = 0;
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -29,18 +29,20 @@ async function createPairsFromRandomImages() {
     return duplicatedRandomUrls;
 }
 
-export async function cardPairs(imageSource = 'dogs') {
+export async function cardPairs() {
 
     const container = document.querySelector('.item2.main');
     container.innerHTML = '';
 
-    let cardset;
-    if (imageSource === 'dogs') {
+    const storedPreferences = JSON.parse(localStorage.getItem('formData'));
+    const api = storedPreferences ? storedPreferences.api : 'dogs';
+
+    if (api === 'dogs') {
         cardSet = await createPairsFromDogImages();
-    } else if (imageSource === 'randomPics') {
+    } else if (api === 'randomPics') {
         cardSet = await createPairsFromRandomImages();
     } else {
-        console.error('Unknown image source:', imageSource);
+        console.error('Onbekende api:', api);
         return;
     }
 
@@ -52,6 +54,22 @@ export async function cardPairs(imageSource = 'dogs') {
         card.addEventListener('click', show);
         container.appendChild(card);
     }
+
+    const closedColor = localStorage.getItem('formData') ? JSON.parse(localStorage.getItem('formData')).color_closed : '#90ee90';
+    const foundColor = localStorage.getItem('formData') ? JSON.parse(localStorage.getItem('formData')).color_found : '#800080';
+
+    const closedCards = document.querySelectorAll('.card#closed');
+    const foundCards = document.querySelectorAll('.card#found');
+
+    closedCards.forEach(card => {
+        card.style.backgroundColor = closedColor;
+        card.style.borderColor = closedColor;
+    });
+
+    foundCards.forEach(card => {
+        card.style.backgroundColor = foundColor;
+        card.style.borderColor = foundColor;
+    });
 
     const newGameButton = document.querySelector('#newGame');
     newGameButton.addEventListener('click', function() {
@@ -89,9 +107,11 @@ export function show() {
                 foundPairs++;
                 if (foundPairs === 18) {
                     clearInterval(timeInterval);
+                    saveGame();
                     alert('Goed gedaan, je hebt alle paren gevonden! Je hebt er ' + document.querySelector('#elapsedTime').innerHTML + ' seconden over gedaan');
                 }
             } else {
+                score += 5;
                 setTimeout(() => {
                     first.style.backgroundImage = '';
                     second.style.backgroundImage = '';
@@ -104,4 +124,37 @@ export function show() {
         this.style.backgroundImage = '';
         this.id = 'closed';
     }
+}
+
+function saveGame() {
+    const userId = localStorage.getItem('userId');
+    const storedPreferences = localStorage.getItem('formData');
+    const preferences = JSON.parse(storedPreferences);
+
+    const formData = {
+        id: userId,
+        api: preferences.api,
+        score: score,
+        color_closed: preferences.color_closed,
+        color_found: preferences.color_found
+    };
+
+    fetch('http://localhost:8000/game/save', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('jwt')
+        },
+        body: JSON.stringify(formData)
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Spel succesvol opgeslagen!');
+        } else {
+            throw new Error('Fout bij het opslaan van het spel');
+        }
+    })
+    .catch(error => {
+        console.error('Fout bij het opslaan van het spel:', error);
+    });
 }

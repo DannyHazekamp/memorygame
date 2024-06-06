@@ -163,21 +163,6 @@
   background-color: #00b300;
 }
 
-#closed {
-  background-color: lightgreen;
-  border-color: lightgreen;
-}
-
-#open {
-  background-color: darkgreen;
-  border-color: darkgreen;
-}
-
-#found {
-  background-color: purple;
-  border-color: purple;
-}
-
 .settings-container {
   display: flex;
   flex-direction: column;

@@ -18,9 +18,16 @@
             
             <button type="submit">Inloggen</button>
         </form>
+        <button id="registerButton">Registreren</button>
     </div>
 
     <script>
+
+        const registerButton = document.getElementById('registerButton');
+        registerButton.addEventListener('click', function() {
+            window.location.href = "/auth/register.html";
+        });
+
         document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
