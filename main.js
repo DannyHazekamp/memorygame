@@ -14,11 +14,11 @@ document.addEventListener('DOMContentLoaded', function() {
              localStorage.removeItem('jwt');
              alert('Sessie verlopen, je moet opnieuw inloggen');
 
-             window.location.href = "/auth/login.html";
+             window.location.href = "/index.html";
          }, ttl * 1000);
      } else {
          alert('Je moet ingelogd zijn hiervoor');
-         window.location.href = "/auth/login.html";
+         window.location.href = "/index.html";
      }
 
     cardPairs();
