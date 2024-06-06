@@ -8,6 +8,14 @@ let gameStarted = false;
 let foundPairs = 0;
 let cardSet = [];
 let score = 0;
+
+const selectedSymbol = 'dot';
+
+const symbolIcons = {
+    dot: '•',
+    star: '★',
+    heart: '♥'
+};
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -36,6 +44,13 @@ export async function cardPairs() {
 
     const storedPreferences = JSON.parse(localStorage.getItem('formData'));
     const api = storedPreferences ? storedPreferences.api : 'dogs';
+    const selectedSymbol = 'dot';
+
+    const symbolIcons = {
+        dot: '•',
+        star: '★',
+        heart: '♥'
+    };
 
     if (api === 'dogs') {
         cardSet = await createPairsFromDogImages();
@@ -51,25 +66,24 @@ export async function cardPairs() {
         card.classList.add('card');
         card.setAttribute('id', 'closed');
         card.setAttribute('index', i);
+
+        const symbol = document.createElement('div');
+        symbol.classList.add('symbol');
+        symbol.innerHTML = symbolIcons[selectedSymbol];
+        card.appendChild(symbol);
+
         card.addEventListener('click', show);
         container.appendChild(card);
     }
 
     const closedColor = localStorage.getItem('formData') ? JSON.parse(localStorage.getItem('formData')).color_closed : '#90ee90';
-    const foundColor = localStorage.getItem('formData') ? JSON.parse(localStorage.getItem('formData')).color_found : '#800080';
 
     const closedCards = document.querySelectorAll('.card#closed');
-    const foundCards = document.querySelectorAll('.card#found');
-
     closedCards.forEach(card => {
         card.style.backgroundColor = closedColor;
         card.style.borderColor = closedColor;
     });
 
-    foundCards.forEach(card => {
-        card.style.backgroundColor = foundColor;
-        card.style.borderColor = foundColor;
-    });
 
     const newGameButton = document.querySelector('#newGame');
     newGameButton.addEventListener('click', function() {
@@ -80,6 +94,7 @@ export async function cardPairs() {
 
 export function show() {
     const cards = document.querySelectorAll('.card');
+    const foundColor = localStorage.getItem('formData') ? JSON.parse(localStorage.getItem('formData')).color_found : '#800080';
 
     if (!gameStarted) {
         gameStarted = true;
@@ -89,7 +104,17 @@ export function show() {
     const index = this.getAttribute('index');
 
     if (this.id === 'closed' || !this.id) {
+
+        if (!this.querySelector('.symbol')) {
+            const symbol = document.createElement('div');
+            symbol.classList.add('symbol');
+            symbol.innerHTML = symbolIcons[selectedSymbol];
+            this.appendChild(symbol);
+        }
+
+
         this.style.backgroundImage = `url(${cardSet[index]})`;
+        this.querySelector('.symbol').style.visibility = 'hidden';
         this.id = 'open';
 
         const openCards = document.querySelectorAll('.card#open');
@@ -102,9 +127,19 @@ export function show() {
             if (cardSet[firstIndex] === cardSet[secondIndex]) {
                 first.id = 'found';
                 second.id = 'found';
+
+                first.style.backgroundColor = foundColor;
+                first.style.borderColor = foundColor;
+
+                second.style.backgroundColor = foundColor;
+                second.style.borderColor = foundColor;
+
                 first.removeEventListener('click', show);
                 second.removeEventListener('click', show);
                 foundPairs++;
+
+                document.getElementById('foundPairs').textContent = foundPairs;
+
                 if (foundPairs === 18) {
                     clearInterval(timeInterval);
                     saveGame();
@@ -117,6 +152,8 @@ export function show() {
                     second.style.backgroundImage = '';
                     first.id = 'closed';
                     second.id = 'closed';
+                    first.querySelector('.symbol').style.visibility = 'visible';
+                    second.querySelector('.symbol').style.visibility = 'visible';
                 }, 1000);
             }
         }

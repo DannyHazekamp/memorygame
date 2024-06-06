@@ -3,6 +3,12 @@
 import { cardPairs} from "./modules/card.js";
 import { timer, startTimer, stopTimer } from "./modules/timer.js";
 
+const symbolIcons = {
+    dot: '•',
+    star: '★',
+    heart: '♥'
+};
+
 document.addEventListener('DOMContentLoaded', function() {
 
     const jwtToken = localStorage.getItem('jwt');
@@ -53,6 +59,15 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = 'settings/settings.html';
     });
 
+    const selectSymbol = document.querySelector('select');
+    selectSymbol.addEventListener('change', function() {
+        const selectedSymbol = this.value;
+        const symbols = document.querySelectorAll('.symbol');
+        symbols.forEach(symbol => {
+            symbol.innerHTML = symbolIcons[selectedSymbol];
+        });
+    });
+
     const newGameButton = document.querySelector('#newGame');
     newGameButton.addEventListener('click', function() {
         stopTimer();
@@ -69,24 +84,24 @@ document.addEventListener('DOMContentLoaded', function() {
             card.style.borderColor = this.value;
         });
     });
-  function fetchTopFiveScores() {
-        fetch('http://localhost:8000/scores')
-            .then(response => response.json())
-            .then(data => {
-                console.log(data);
-                data.sort((a, b) => a.score - b.score);
 
-                const topFiveScores = data.slice(0, 5);
+    function fetchTopFiveScores() {
+            fetch('http://localhost:8000/scores')
+                .then(response => response.json())
+                .then(data => {
+                    data.sort((a, b) => a.score - b.score);
 
-                const topFiveList = document.getElementById('topFiveList');
-                topFiveList.innerHTML = '';
-                data.forEach((score, index) => {
-                    const listItem = document.createElement('li');
-                    listItem.textContent = `${score.username}: ${score.score}`;
-                    topFiveList.appendChild(listItem);
-                });
-            })
-            .catch(error => console.error('Fout bij het ophalen van scores:', error));
+                    const topFiveScores = data.slice(0, 5);
+
+                    const topFiveList = document.getElementById('topFiveList');
+                    topFiveList.innerHTML = '';
+                    data.forEach((score, index) => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = `${index + 1}. ${score.username}: ${score.score.toFixed(1)}`;
+                        topFiveList.appendChild(listItem);
+                    });
+                })
+                .catch(error => console.error('Fout bij het ophalen van scores:', error));
     }
 
     fetchTopFiveScores();
