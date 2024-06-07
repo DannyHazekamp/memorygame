@@ -107,7 +107,12 @@ export async function cardPairs(boardSize) {
 
 export function show() {
     const cards = document.querySelectorAll('.card');
+    const openCards = document.querySelectorAll('.card#open:not(#found)');
     const foundColor = localStorage.getItem('formData') ? JSON.parse(localStorage.getItem('formData')).color_found : '#800080';
+
+    if (openCards.length >= 2) {
+        return;
+    }
 
     if (!gameStarted) {
         gameStarted = true;
@@ -154,9 +159,9 @@ export function show() {
                 document.getElementById('foundPairs').textContent = foundPairs;
 
                 if (foundPairs === numPairs) {
-                    clearInterval(timeInterval);
                     saveGame();
                     alert('Goed gedaan, je hebt alle paren gevonden! Je hebt er ' + document.querySelector('#elapsedTime').innerHTML + ' seconden over gedaan');
+                    stopTimer();
                 }
             } else {
                 score += 5;
