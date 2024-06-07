@@ -14,4 +14,6 @@ export function startTimer() {
 
 export function stopTimer() {
     clearInterval(timeInterval);
+    timeInterval = null;
+    document.querySelector('#elapsedTime').textContent = 0;
 }

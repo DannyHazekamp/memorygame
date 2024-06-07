@@ -8,6 +8,7 @@ let gameStarted = false;
 let foundPairs = 0;
 let cardSet = [];
 let score = 0;
+let numPairs = 0;
 
 const selectedSymbol = 'dot';
 
@@ -23,28 +24,44 @@ function shuffle(array) {
     }
 }
 
-async function createPairsFromDogImages() {
+async function createPairsFromDogImages(numPairs) {
     const dogUrls = await fetchDogImages();
-    const duplicatedDogUrls = dogUrls.flatMap(url => [url, url]);
+    const selectedDogUrls = dogUrls.slice(0, numPairs);
+    const duplicatedDogUrls = selectedDogUrls.flatMap(url => [url, url]);
     shuffle(duplicatedDogUrls);
     return duplicatedDogUrls;
 }
 
-async function createPairsFromRandomImages() {
+async function createPairsFromRandomImages(numPairs) {
     const randomUrls = await fetchRandomImages();
-    const duplicatedRandomUrls = randomUrls.flatMap(url => [url, url]);
+    const selectedRandomUrls = randomUrls.slice(0, numPairs);
+    const duplicatedRandomUrls = selectedRandomUrls.flatMap(url => [url, url]);
     shuffle(duplicatedRandomUrls);
     return duplicatedRandomUrls;
 }
 
-export async function cardPairs() {
+export async function cardPairs(boardSize) {
 
-    const container = document.querySelector('.item2.main');
+    const container = document.querySelector('.item2');
     container.innerHTML = '';
 
     const storedPreferences = JSON.parse(localStorage.getItem('formData'));
     const api = storedPreferences ? storedPreferences.api : 'dogs';
     const selectedSymbol = 'dot';
+
+    boardSize = boardSize || 2;
+    boardSize = parseInt(boardSize);
+
+    if (boardSize === 2) {
+        numPairs = 2; 
+        container.className = 'item2  main-2x2';
+    } else if (boardSize === 4) {
+        numPairs = 8; 
+        container.className = 'item2  main-4x4';
+    } else {
+        numPairs = 18; 
+        container.className = 'item2  main-6x6';
+    }
 
     const symbolIcons = {
         dot: '•',
@@ -53,15 +70,17 @@ export async function cardPairs() {
     };
 
     if (api === 'dogs') {
-        cardSet = await createPairsFromDogImages();
+        cardSet = await createPairsFromDogImages(numPairs);
     } else if (api === 'randomPics') {
-        cardSet = await createPairsFromRandomImages();
+        cardSet = await createPairsFromRandomImages(numPairs);
     } else {
         console.error('Onbekende api:', api);
         return;
     }
 
-    for (let i = 0; i < 36; i++) {
+    cardSet = cardSet.slice(0, numPairs * 2);
+
+    for (let i = 0; i < numPairs * 2; i++) {
         const card = document.createElement('div');
         card.classList.add('card');
         card.setAttribute('id', 'closed');
@@ -84,12 +103,6 @@ export async function cardPairs() {
         card.style.borderColor = closedColor;
     });
 
-
-    const newGameButton = document.querySelector('#newGame');
-    newGameButton.addEventListener('click', function() {
-        clearInterval(timeInterval);
-        window.location.reload();
-    });
 }
 
 export function show() {
@@ -98,7 +111,7 @@ export function show() {
 
     if (!gameStarted) {
         gameStarted = true;
-        timeInterval = setInterval(timer, 1000);
+        startTimer();
     }
 
     const index = this.getAttribute('index');
@@ -140,7 +153,7 @@ export function show() {
 
                 document.getElementById('foundPairs').textContent = foundPairs;
 
-                if (foundPairs === 18) {
+                if (foundPairs === numPairs) {
                     clearInterval(timeInterval);
                     saveGame();
                     alert('Goed gedaan, je hebt alle paren gevonden! Je hebt er ' + document.querySelector('#elapsedTime').innerHTML + ' seconden over gedaan');
@@ -157,9 +170,9 @@ export function show() {
                     if (currentWidth > 0) {
                         progressBarContent.style.width = (currentWidth - 1) + '%';
                     } else {
-                        clearInterval(decreaseWidthInterval);
+                        clearInterval(decreaseWidthInterval); 
                     }
-                }, 30);
+                }, 20);
 
                 setTimeout(() => {
                     first.style.backgroundImage = '';
@@ -169,7 +182,7 @@ export function show() {
                     first.querySelector('.symbol').style.visibility = 'visible';
                     second.querySelector('.symbol').style.visibility = 'visible';
                     progressBarContent.style.width = '0%';
-                }, 3000);
+                }, 2000);
             }
         }
     } else {
