@@ -147,6 +147,20 @@ export function show() {
                 }
             } else {
                 score += 5;
+
+                const progressBarContent = document.querySelector('.progress-bar-content');
+                progressBarContent.style.width = '100%';
+
+
+                const decreaseWidthInterval = setInterval(() => {
+                    const currentWidth = parseInt(progressBarContent.style.width);
+                    if (currentWidth > 0) {
+                        progressBarContent.style.width = (currentWidth - 1) + '%';
+                    } else {
+                        clearInterval(decreaseWidthInterval);
+                    }
+                }, 30);
+
                 setTimeout(() => {
                     first.style.backgroundImage = '';
                     second.style.backgroundImage = '';
@@ -154,7 +168,8 @@ export function show() {
                     second.id = 'closed';
                     first.querySelector('.symbol').style.visibility = 'visible';
                     second.querySelector('.symbol').style.visibility = 'visible';
-                }, 1000);
+                    progressBarContent.style.width = '0%';
+                }, 3000);
             }
         }
     } else {

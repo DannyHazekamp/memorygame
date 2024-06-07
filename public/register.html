@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registratiepagina</title>
-    <link rel="stylesheet" href="auth.css">
+    <link rel="stylesheet" href="styles/auth.css">
 </head>
 <div>
     <div class="container">
@@ -29,7 +29,7 @@
 
         const loginButton = document.getElementById('loginButton');
         loginButton.addEventListener('click', function() {
-            window.location.href = "../index.html";
+            window.location.href = "index.html";
         });
 
 
@@ -52,7 +52,7 @@
             .then(response => {
                 if (response.ok) {
                     alert('Registreren is gelukt!');
-                    window.location.href = "../index.html";
+                    window.location.href = "index.html";
                 } else {
                     throw new Error('Registratie mislukt');
                 }

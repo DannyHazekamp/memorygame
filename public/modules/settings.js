@@ -7,7 +7,7 @@ const symbolIcons = {
 export function initSettings() {
     const settingsButton = document.querySelector('#settings');
     settingsButton.addEventListener('click', function() {
-        window.location.href = 'settings/settings.html';
+        window.location.href = 'settings.html';
     });
 
     const selectSymbol = document.querySelector('select');

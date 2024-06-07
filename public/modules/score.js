@@ -8,7 +8,7 @@ export function fetchTopFiveScores() {
 
             const topFiveList = document.getElementById('topFiveList');
             topFiveList.innerHTML = '';
-            data.forEach((score, index) => {
+            topFiveScores.forEach((score, index) => {
                 const listItem = document.createElement('li');
                 listItem.textContent = `${index + 1}. ${score.username}: ${score.score.toFixed(1)}`;
                 topFiveList.appendChild(listItem);
