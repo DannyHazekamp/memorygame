@@ -42,7 +42,7 @@ export async function cardPairs(boardSize) {
 
     const container = document.querySelector('.item2');
     container.innerHTML = '';
-
+    foundPairs = 0;
     const storedPreferences = JSON.parse(localStorage.getItem('formData'));
     const api = storedPreferences ? storedPreferences.api : 'dogs';
     const selectedSymbol = 'dot';
@@ -136,6 +136,7 @@ export function show() {
         const openCards = document.querySelectorAll('.card#open');
 
         if (openCards.length === 2) {
+            console.log(numPairs);
             const [first, second] = openCards;
             const firstIndex = first.getAttribute('index');
             const secondIndex = second.getAttribute('index');

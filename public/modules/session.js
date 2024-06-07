@@ -4,6 +4,16 @@ export function handleSession() {
 
     const jwtToken = localStorage.getItem('jwt');
     
+    if (!localStorage.getItem('formData')) {
+        const defaultFormData = {
+            api: 'dogs',
+            color_found: '#800080', 
+            color_closed: '#90ee90'
+        };
+    
+        localStorage.setItem('formData', JSON.stringify(defaultFormData));
+    }
+
     if (!jwtToken) {
         alert('Je moet ingelogd zijn om deze pagina te bezoeken');
         window.location.href = "/index.html";

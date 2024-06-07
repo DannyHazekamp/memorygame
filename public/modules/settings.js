@@ -1,5 +1,5 @@
 import { cardPairs } from './card.js';
-import { stopTimer } from './timer.js';
+import { startTimer, stopTimer } from './timer.js';
 
 const symbolIcons = {
     dot: '•',
@@ -35,13 +35,19 @@ export function handleSymbolChange() {
 }
 
 export function handleBoardSizeChange() {
+    const boardSizeSelector = document.querySelector('#boardSize');
+    const selectedBoardSize = parseInt(boardSizeSelector.value);
     stopTimer();
-    window.location.reload();
+    cardPairs(selectedBoardSize);
+    startTimer();
 }
 
 export function handleNewGame() {
+    const boardSizeSelector = document.querySelector('#boardSize');
+    const selectedBoardSize = parseInt(boardSizeSelector.value);
     stopTimer();
-    window.location.reload();
+    cardPairs(selectedBoardSize);
+    startTimer();
 }
 
 export function handleOpenColorChange() {
