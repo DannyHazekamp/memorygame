@@ -5,7 +5,7 @@ export function handleSession() {
     const jwtToken = localStorage.getItem('jwt');
     
     if (!jwtToken) {
-        alert('Je moet ingelogd zijn hiervoor');
+        alert('Je moet ingelogd zijn om deze pagina te bezoeken');
         window.location.href = "/index.html";
         return;
     }

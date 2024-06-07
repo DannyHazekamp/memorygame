@@ -14,7 +14,7 @@ export function fetchTopFiveScores() {
                 topFiveList.appendChild(listItem);
             });
         })
-        .catch(error => console.error('Fout bij het ophalen van scores:', error));
+        .catch(error => console.error('Fout bij het ophalen van de scores:', error));
 }
 
 export function displayAverageGameDuration() {
@@ -24,9 +24,11 @@ export function displayAverageGameDuration() {
 
 function calculateAverageGameDuration() {
     const gameDurations = JSON.parse(localStorage.getItem('gameDurations')) || [];
+    
     if (gameDurations.length === 0) {
         return 0;
     }
+
     const total = gameDurations.reduce((acc, curr) => acc + curr, 0);
     return (total / gameDurations.length).toFixed(1);
 }

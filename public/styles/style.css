@@ -57,6 +57,22 @@
 }
 
 
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+select,
+input[type="color"] {
+    width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+
 .main-2x2 .card { background-size: contain; }
 .main-4x4 .card,
 .main-6x6 .card { background-size: cover; }
@@ -67,6 +83,7 @@
   background-color: #cccccc;
   padding: 3px;
   margin: 0 auto;
+  margin-bottom: 5px;
   border: 1px solid;
 }
 

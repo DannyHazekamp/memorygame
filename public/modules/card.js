@@ -1,5 +1,3 @@
-// card.js
-
 import { timer, startTimer, stopTimer } from './timer.js';
 import { fetchDogImages, fetchRandomImages } from './api.js';
 
@@ -227,7 +225,7 @@ function saveGame() {
     })
     .then(response => {
         if (response.ok) {
-            console.log('Spel succesvol opgeslagen!');
+            console.log('Het spel is succesvol opgeslagen!');
         } else {
             throw new Error('Fout bij het opslaan van het spel');
         }

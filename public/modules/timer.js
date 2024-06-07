@@ -1,5 +1,3 @@
-// timer.js
-
 let timeInterval;
 
 export function timer() {

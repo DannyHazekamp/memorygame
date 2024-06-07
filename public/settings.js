@@ -1,11 +1,9 @@
-// settings/settings.js
-
 document.addEventListener('DOMContentLoaded', function() {
 
     const jwtToken = localStorage.getItem('jwt');
     
     if (!jwtToken) {
-        alert('Je moet ingelogd zijn hiervoor');
+        alert('Je moet ingelogd zijn om deze pagina te bezoeken');
         window.location.href = "index.html";
         return;
     } 
@@ -41,17 +39,16 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (response.ok) {
                 return response.json;
             } else {
-                throw new Error('Fout bij het updaten van voorkeuren');
+                throw new Error('Er is een fout opgetreden bij het bijwerken van je voorkeuren.');
             }
         })
         .then(data => {
             localStorage.setItem('formData', JSON.stringify(formData));
-            console.log('Voorkeuren succesvol bijgewerkt:', data);
-            alert('Voorkeuren zijn succesvol bijgewerkt!');
+            alert('Je voorkeuren zijn succesvol bijgewerkt!');
         })
         .catch(error => {
-            console.error('Fout bij het updaten van voorkeuren:', error);
-            alert('Er is een fout opgetreden bij het bijwerken van de voorkeuren.');
+            console.error('Er is een fout opgetreden bij het bijwerken van je voorkeuren:', error);
+            alert('Er is een fout opgetreden bij het bijwerken van je voorkeuren.');
         });
     });
 
@@ -78,16 +75,16 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (response.ok) {
                 return response.json;
             } else {
-                throw new Error('Fout bij het updaten van voorkeuren');
+                throw new Error('Fout bij het bijwerken van je voorkeuren');
             }
         })
         .then(data => {
-            console.log('E-mailadres is bijgewerkt', data);
+            console.log('Je e-mailadres is bijgewerkt', data);
             alert('Je e-mailadres is bijgewerkt!');
         })
         .catch(error => {
-            console.error('Fout bij het updaten van voorkeuren:', error);
-            alert('Er is een fout opgetreden bij het bijwerken van de voorkeuren.');
+            console.error('Fout bij het updaten van je voorkeuren:', error);
+            alert('Er is een fout opgetreden bij het bijwerken van je voorkeuren.');
         });
     });
 

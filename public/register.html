@@ -1,10 +1,9 @@
-<!-- register.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registratiepagina</title>
+    <title>Registratie pagina</title>
     <link rel="stylesheet" href="styles/auth.css">
 </head>
 <div>
@@ -22,7 +21,7 @@
             
             <button type="submit">Registreren</button>
         </form>
-        <button id="loginButton">Login</button>
+        <p class="text-secondary">Al een account? <a class="link" id="loginButton">Inloggen</a></p>
     </div>
 
     <script>
@@ -51,10 +50,10 @@
             })
             .then(response => {
                 if (response.ok) {
-                    alert('Registreren is gelukt!');
+                    alert('Het registreren is gelukt!');
                     window.location.href = "index.html";
                 } else {
-                    throw new Error('Registratie mislukt');
+                    throw new Error('De registratie is mislukt');
                 }
             })
             .catch(error => {

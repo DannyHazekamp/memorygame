@@ -1,42 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Voorkeuren wijzigen</title>
-    <link rel="stylesheet" href="styles/settings.css">
-</head>
-<body>
+    <link rel="stylesheet" href="styles/settings.css" />
+  </head>
+  <body>
     <div class="container">
-        <button id="backButton">Terug</button>
-        <h1>Voorkeuren wijzigen</h1>
-        <form id="preferencesForm">
-            <label for="preferredApi">Kies je favoriete plaatjes-API:</label>
-            <select id="api" name="api">
-                <option value="dogs">Honden</option>
-                <option value="randomPics">Plaatjes</option>
-            </select>
+      <button id="backButton">Terug</button>
+      <h1>Voorkeuren wijzigen</h1>
+      <form id="preferencesForm">
+        <label for="preferredApi">Kies je favoriete plaatjes-API:</label>
+        <select id="api" name="api">
+          <option value="dogs">Honden</option>
+          <option value="randomPics">Plaatjes</option>
+        </select>
 
-            <div class="colors">
-                <label for="colorClosed">Kleur van gesloten kaarten:</label>
-                <input type="color" id="color_closed" name="color_closed">
+        <div class="colors">
+          <label for="color_closed">Kleur van gesloten kaarten:</label>
+          <input type="color" id="color_closed" name="color_closed" />
 
-                <label for="colorFound">Kleur van gevonden kaarten:</label>
-                <input type="color" id="color_found" name="color_found">
-            </div>
-            <button type="submit">Opslaan</button>
-        </form>
+          <label for="color_found">Kleur van gevonden kaarten:</label>
+          <input type="color" id="color_found" name="color_found" />
+        </div>
+        <button type="submit">Opslaan</button>
+      </form>
 
-        <h1>Email wijzigen</h1>
-        <form id="emailForm">
-            <label for="email">Wijzig je e-mailadres:</label>
-            <input type="email" id="email" name="email"><br>
+      <h1>Email wijzigen</h1>
+      <form id="emailForm">
+        <label for="email">Wijzig je e-mailadres:</label>
+        <input type="email" id="email" name="email" /><br />
 
-            <button type="submit">Opslaan</button>
-        </form>
+        <button type="submit">Opslaan</button>
+      </form>
     </div>
 
     <script type="module" src="modules/session.js"></script>
     <script src="settings.js"></script>
-</body>
+  </body>
 </html>
