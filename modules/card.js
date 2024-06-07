@@ -168,6 +168,14 @@ function saveGame() {
     const storedPreferences = localStorage.getItem('formData');
     const preferences = JSON.parse(storedPreferences);
 
+    const elapsedTime = parseInt(document.querySelector('#elapsedTime').textContent);
+
+    let gameDurations = JSON.parse(localStorage.getItem('gameDurations')) || [];
+
+    gameDurations.push(elapsedTime);
+
+    localStorage.setItem('gameDurations', JSON.stringify(gameDurations));
+
     const formData = {
         id: userId,
         api: preferences.api,
