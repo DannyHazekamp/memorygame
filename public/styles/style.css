@@ -23,6 +23,25 @@
   font-size: 20px;
 }
 
+.navbar-links {
+  display: flex;
+  align-items: center;
+}
+
+.memory-link {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  margin-right: 20px;
+}
+
+.memory-link:hover {
+  background-color: #45a049;
+}
+
 .logout-button {
   background-color: #ff4d4d;
   color: white;
@@ -30,6 +49,10 @@
   border-radius: 4px;
   padding: 10px 20px;
   cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #ff1a1a;
 }
 
 .logout-button:hover {
