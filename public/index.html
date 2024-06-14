@@ -9,12 +9,15 @@
 <body>
     <div class="container">
         <h1>Login</h1>
+        <div id="successMessage" class="success-message"></div>
+        <div id="errorMessage" class="error-message"></div>
+
         <form id="loginForm">
             <label for="username">Gebruikersnaam:</label>
-            <input type="text" id="username" name="username" required><br>
+            <input type="text" id="username" name="username" required>
             
             <label for="password">Wachtwoord:</label>
-            <input type="password" id="password" name="password" required><br>
+            <input type="password" id="password" name="password" required>
             
             <button type="submit">Inloggen</button>
         </form>
@@ -51,17 +54,25 @@
                 }
             })
             .then(data => {
-                console.log(data);
-                console.log(data.token);
+                let successMessage = document.getElementById('successMessage');
+                let errorMessage = document.getElementById('errorMessage');
 
+                successMessage.textContent = 'Je bent succesvol ingelogd!';
+                errorMessage.textContent = '';
                 localStorage.setItem('jwt', data.token);
 
-                alert('Inloggen succesvol!');
-                window.location.href = "memory.html";
+                setTimeout(() => {
+                    window.location.href = "memory.html";
+                }, 1500);
             })
             .catch(error => {
                 console.error(error);
-                alert('Er is iets fout gegaan bij het inloggen');
+
+                let successMessage = document.getElementById('successMessage');
+                let errorMessage = document.getElementById('errorMessage');
+                
+                errorMessage.textContent = 'Er is iets fout gegaan bij het inloggen';
+                successMessage.textContent = '';
             });
         });
     </script>

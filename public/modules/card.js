@@ -136,7 +136,7 @@ export function show() {
         const openCards = document.querySelectorAll('.card#open');
 
         if (openCards.length === 2) {
-            console.log(numPairs);
+            
             const [first, second] = openCards;
             const firstIndex = first.getAttribute('index');
             const secondIndex = second.getAttribute('index');
@@ -161,6 +161,7 @@ export function show() {
                     saveGame();
                     alert('Goed gedaan, je hebt alle paren gevonden! Je hebt er ' + document.querySelector('#elapsedTime').innerHTML + ' seconden over gedaan');
                     stopTimer();
+                    document.getElementById('foundPairs').textContent = 0;
                 }
             } else {
                 score += 5;

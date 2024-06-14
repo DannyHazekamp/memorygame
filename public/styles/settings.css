@@ -58,3 +58,15 @@ button:hover {
     background-color: #0056b3;
 }
 
+.error-message,
+.error-message-email {
+    color: red;
+    margin-bottom: 10px;
+}
+
+.success-message,
+.success-message-email {
+    color: green;
+    margin-bottom: 10px;
+}
+

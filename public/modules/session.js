@@ -39,6 +39,13 @@ export function handleSession() {
     }
 }
 
+export function logout() {
+    document.getElementById('logout-button').addEventListener('click', function() {
+        localStorage.clear();
+        window.location.href = '/index.html';
+    });
+}
+
 function setupSessionTimeout(timeoutDuration) {
     clearTimeout(sessionTimeout); 
 

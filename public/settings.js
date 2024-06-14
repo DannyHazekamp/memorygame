@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const jwtToken = localStorage.getItem('jwt');
     
     if (!jwtToken) {
-        alert('Je moet ingelogd zijn om deze pagina te bezoeken');
         window.location.href = "index.html";
         return;
     } 
@@ -43,12 +42,20 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         })
         .then(data => {
+            let successMessage = document.getElementById('successMessage');
+            let errorMessage = document.getElementById('errorMessage');
+
+            successMessage.textContent = 'Je voorkeuren zijn succesvol bijgewerkt!';
+            errorMessage.textContent = '';
             localStorage.setItem('formData', JSON.stringify(formData));
-            alert('Je voorkeuren zijn succesvol bijgewerkt!');
         })
         .catch(error => {
             console.error('Er is een fout opgetreden bij het bijwerken van je voorkeuren:', error);
-            alert('Er is een fout opgetreden bij het bijwerken van je voorkeuren.');
+            let successMessage = document.getElementById('successMessage');
+            let errorMessage = document.getElementById('errorMessage');
+                
+            errorMessage.textContent = 'Er is een fout opgetreden bij het bijwerken van je voorkeuren';
+            successMessage.textContent = '';
         });
     });
 
@@ -80,11 +87,19 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(data => {
             console.log('Je e-mailadres is bijgewerkt', data);
-            alert('Je e-mailadres is bijgewerkt!');
+            let successMessageEmail = document.getElementById('successMessageEmail');
+            let errorMessageEmail = document.getElementById('errorMessageEmail');
+
+            successMessageEmail.textContent = 'Je e-mailadres is bijgewerkt';
+            errorMessageEmail.textContent = '';
         })
         .catch(error => {
             console.error('Fout bij het updaten van je voorkeuren:', error);
-            alert('Er is een fout opgetreden bij het bijwerken van je voorkeuren.');
+            let successMessageEmail = document.getElementById('successMessageEmail');
+            let errorMessageEmail = document.getElementById('errorMessageEmail');
+                
+            errorMessageEmail.textContent = 'Er is een fout opgetreden bij het bijwerken van je e-mail';
+            successMessageEmail.textContent = '';
         });
     });
 
@@ -113,7 +128,7 @@ function loadUserPreferences() {
         } else if (response.ok) {
             return response.json();
         } else {
-            throw new Error('Fout bij het ophalen van de email');
+            throw new Error('Fout bij het ophalen van je e-mailadres');
         }
     })
     .then(data => {
@@ -121,7 +136,7 @@ function loadUserPreferences() {
         emailInput.value = data;
     })
     .catch(error => {
-        console.error('Fout bij het ophalen van e-mailadres:', error);
+        console.error('Fout bij het ophalen van je e-mailadres:', error);
         const emailInput = document.getElementById('email');
         emailInput.placeholder = "E-mailadres";
     });

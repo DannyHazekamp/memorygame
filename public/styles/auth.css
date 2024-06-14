@@ -36,7 +36,7 @@ input[type="email"],
 input[type="password"],
 button {
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -53,7 +53,12 @@ button:hover {
 
 .error-message {
     color: red;
-    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.success-message {
+    color: green;
+    margin-bottom: 10px;
 }
 
 .text-secondary {
