@@ -4,7 +4,7 @@ export async function fetchDogImages() {
         const { message } = await response.json();
         return message;
     } catch (error) {
-        console.error('Fout bij het ophalen van random images:', error);
+        console.error('Fout bij het ophalen van random hond images:', error);
         return [];
     }
 }

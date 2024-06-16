@@ -9,6 +9,9 @@
 <div>
     <div class="container">
         <h1>Registratie</h1>
+        <div id="successMessage" class="success-message"></div>
+        <div id="errorMessage" class="error-message"></div>
+
         <form id="registerForm">
             <label for="name">Gebruikersnaam:</label>
             <input type="text" id="username" name="username" required>
@@ -50,15 +53,26 @@
             })
             .then(response => {
                 if (response.ok) {
-                    alert('Het registreren is gelukt!');
-                    window.location.href = "index.html";
+                    let successMessage = document.getElementById('successMessage');
+                    let errorMessage = document.getElementById('errorMessage');
+
+                    successMessage.textContent = 'Het registreren is gelukt!';
+                    errorMessage.textContent = '';
+
+                    setTimeout(() => {
+                        window.location.href = "index.html";
+                    }, 1500);
                 } else {
                     throw new Error('De registratie is mislukt');
                 }
             })
             .catch(error => {
                 console.error(error);
-                alert('Er is iets fout gegaan bij de registratie');
+                let successMessage = document.getElementById('successMessage');
+                let errorMessage = document.getElementById('errorMessage');
+                
+                errorMessage.textContent = 'Er is iets fout gegaan bij het registreren';
+                successMessage.textContent = '';
             });
         });
     </script>
